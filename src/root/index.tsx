@@ -1,3 +1,12 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthPage } from "src/pages/AuthPage";
+
 export const App = () => {
-  return <div>Hello World</div>;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<AuthPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
 };

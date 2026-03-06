@@ -1,0 +1,5 @@
+export const USERS_MUTATION = "USERS_MUTATION";
+
+export const SIGN_UP_MUTATION = "SIGN_UP_MUTATION";
+
+export const SIGN_IN_MUTATION = "SIGN_IN_MUTATION";
