@@ -3,3 +3,5 @@ export const USERS_MUTATION = "USERS_MUTATION";
 export const SIGN_UP_MUTATION = "SIGN_UP_MUTATION";
 
 export const SIGN_IN_MUTATION = "SIGN_IN_MUTATION";
+
+export const GET_USER_QUERY = "GET_USER_QUERY";

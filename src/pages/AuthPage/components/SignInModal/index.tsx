@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Field } from "../Field";
 import { useSignIn } from "src/api/mutations";
+import { useNavigate } from "react-router-dom";
 
 export type SignInData = {
   login: string;
@@ -19,6 +20,8 @@ export const SignInModal = ({ onSignUpClick }: SignInModalProps) => {
     Partial<Record<keyof SignInData, string>>
   >({});
 
+  const navigate = useNavigate();
+
   const { mutateAsync: signIn, isPending, error } = useSignIn();
 
   const isFormValid = (): boolean => {
@@ -33,7 +36,13 @@ export const SignInModal = ({ onSignUpClick }: SignInModalProps) => {
   };
 
   const handleSubmit = async () => {
-    if (isFormValid()) await signIn({ login: login.trim(), password });
+    if (isFormValid()) {
+      const response = await signIn({ login: login.trim(), password });
+
+      if (response?.data.user) {
+        navigate("/dashboard");
+      }
+    }
   };
 
   const clearError = (field: keyof SignInData) =>

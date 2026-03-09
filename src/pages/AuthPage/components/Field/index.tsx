@@ -7,6 +7,7 @@ type FieldProps = {
   value: string;
   error?: string;
   onChange: (value: string) => void;
+  autoComplete?: string;
 };
 
 export const Field = ({
@@ -16,12 +17,14 @@ export const Field = ({
   value,
   error,
   onChange,
+  autoComplete,
 }: FieldProps) => (
   <div>
     <label className="mb-1.5 block text-sm font-medium text-slate-300">
       {label}
     </label>
     <input
+      autoComplete={autoComplete ?? "off"}
       type={type}
       value={value}
       onChange={(e) => onChange(e.target.value)}

@@ -1,12 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { SignInModal } from "./components/SignInModal";
 import { SignUpModal } from "./components/SignUpModal";
+import { useGetUser } from "src/api/queries";
+import { useNavigate } from "react-router-dom";
 
 type AuthMode = "signIn" | "signUp";
 
 export const AuthPage = () => {
+  const navigate = useNavigate();
+
   const [mode, setMode] = useState<AuthMode>("signIn");
+
+  const { data: user, isLoading: isLoadingUser } = useGetUser();
+
+  useEffect(() => {
+    if (isLoadingUser) return;
+
+    if (user?.data.user) navigate("/dashboard");
+  }, [user, isLoadingUser, navigate]);
 
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-4">

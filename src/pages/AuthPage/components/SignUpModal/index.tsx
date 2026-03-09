@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Field } from "../Field";
 import { useCreateUser } from "src/api/mutations";
+import { useNavigate } from "react-router-dom";
 
 export type SignUpData = {
   login: string;
@@ -24,6 +25,8 @@ export const SignUpModal = ({ onSignInClick }: SignUpModalProps) => {
     Partial<Record<keyof SignUpFormFields, string>>
   >({});
 
+  const navigate = useNavigate();
+
   const isFormValid = (): boolean => {
     const errors: Partial<Record<keyof SignUpFormFields, string>> = {};
 
@@ -45,12 +48,16 @@ export const SignUpModal = ({ onSignInClick }: SignUpModalProps) => {
 
   const handleSubmit = async () => {
     if (isFormValid()) {
-      await createUser({
+      const response = await createUser({
         login: login.trim(),
         password,
         role,
         name: login.trim(),
       });
+
+      if (response?.data.user) {
+        navigate("/dashboard");
+      }
     }
   };
 
