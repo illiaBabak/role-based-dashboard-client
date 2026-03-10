@@ -1,4 +1,4 @@
-import { AuthResponse } from "src/types";
+import { AuthResponse, CreatedUser, UsersResponse } from "src/types";
 
 export const isNumber = (value: unknown): value is number =>
   typeof value === "number";
@@ -28,3 +28,25 @@ export const isAuthResponse = (value: unknown): value is AuthResponse =>
   isString(value.data.user.login) &&
   isString(value.data.user.name) &&
   isString(value.data.user.role);
+
+export const isCreatedUser = (value: unknown): value is CreatedUser =>
+  typeof value === "object" &&
+  value !== null &&
+  "id" in value &&
+  "login" in value &&
+  "name" in value &&
+  "role" in value &&
+  isNumber(value.id) &&
+  isString(value.login) &&
+  isString(value.name) &&
+  isString(value.role);
+
+export const isUsersResponse = (value: unknown): value is UsersResponse =>
+  typeof value === "object" &&
+  value !== null &&
+  "data" in value &&
+  "error" in value &&
+  isObject(value.data) &&
+  "users" in value.data &&
+  Array.isArray(value.data.users) &&
+  value.data.users.every(isCreatedUser);

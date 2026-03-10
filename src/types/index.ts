@@ -15,3 +15,16 @@ export type AuthResponse = {
   };
   error: null;
 };
+
+export type UpdateUserPayload = {
+  id: number;
+  name?: string;
+  role?: "admin" | "user";
+};
+
+export type UsersResponse = {
+  data: {
+    users: CreatedUser[];
+  };
+  error: null;
+};
