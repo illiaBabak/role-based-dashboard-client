@@ -10,7 +10,7 @@ export default defineConfig({
   },
   envPrefix: "ENV_",
   server: {
-    open: true,
+    host: true,
     port: 3000,
   },
   plugins: [react(), eslint(), checker({ typescript: true })],
