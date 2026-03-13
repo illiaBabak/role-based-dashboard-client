@@ -193,27 +193,6 @@ export const useUpdateUser = (): UseMutationResult<
   return useMutation({
     mutationFn: updateUser,
     mutationKey: [USERS_MUTATION, UPDATE_USER_MUTATION],
-    onMutate: async (payload) => {
-      await queryClient.cancelQueries({ queryKey: [USERS_QUERY] });
-
-      const previousUsers = queryClient.getQueryData<CreatedUser[]>([
-        USERS_QUERY,
-      ]);
-
-      queryClient.setQueryData(
-        [USERS_QUERY],
-        (prev: CreatedUser[] | undefined) => {
-          return prev?.map((user) => {
-            if (user.id === payload.id) {
-              return { ...user, ...payload };
-            }
-            return user;
-          });
-        }
-      );
-
-      return { previousUsers };
-    },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: [USERS_QUERY] });
       queryClient.invalidateQueries({ queryKey: [GET_USER_QUERY] });
