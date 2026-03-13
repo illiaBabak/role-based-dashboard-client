@@ -12,7 +12,7 @@ const getUser = async (): Promise<AuthResponse | null> => {
   const result = await response.json();
 
   if (!response.ok) {
-    throw new Error(result.error);
+    throw new Error("Unauthorized");
   }
 
   return isAuthResponse(result) ? result : null;

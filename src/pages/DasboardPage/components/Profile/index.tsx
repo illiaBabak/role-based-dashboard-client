@@ -2,19 +2,17 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { CreatedUser } from "src/types";
 import { useDeleteUser, useUpdateUser } from "src/api/mutations";
-import { useNavigate } from "react-router-dom";
 
 type ProfileProps = {
   user: CreatedUser;
+  isCurrentUser: boolean;
 };
 
-export const Profile = ({ user }: ProfileProps) => {
+export const Profile = ({ user, isCurrentUser }: ProfileProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState(user.name);
   const [role, setRole] = useState<"admin" | "user">(user.role);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-
-  const navigate = useNavigate();
 
   const {
     mutateAsync: updateUser,
@@ -48,7 +46,6 @@ export const Profile = ({ user }: ProfileProps) => {
 
   const handleDelete = async () => {
     await deleteUser(user.id);
-    navigate("/");
   };
 
   return (
@@ -56,9 +53,20 @@ export const Profile = ({ user }: ProfileProps) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
-      className="w-full"
+      className="relative w-full"
     >
-      <div className="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-2xl backdrop-blur-xl">
+      <div
+        className={`rounded-2xl border p-6 shadow-2xl backdrop-blur-xl ${
+          isCurrentUser
+            ? "border-emerald-500/50 bg-white/5 ring-1 ring-emerald-500/20"
+            : "border-white/10 bg-white/5"
+        }`}
+      >
+        {isCurrentUser && (
+          <span className="absolute right-4 top-4 rounded-full bg-emerald-500/20 px-2 py-0.5 text-[10px] font-medium text-emerald-400">
+            You
+          </span>
+        )}
         <div className="mb-5 flex items-center gap-3">
           <div className="flex h-11 w-11 items-center justify-center rounded-full bg-indigo-600 text-sm font-bold text-white shadow-lg shadow-indigo-500/20">
             {user.name.charAt(0).toUpperCase()}

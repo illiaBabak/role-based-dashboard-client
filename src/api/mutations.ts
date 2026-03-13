@@ -167,8 +167,18 @@ export const useDeleteUser = (): UseMutationResult<void, Error, number> => {
 
       return { previousUsers };
     },
-    onSettled: () => {
+    onSettled: (_, __, userId) => {
       queryClient.invalidateQueries({ queryKey: [USERS_QUERY] });
+
+      const authData = queryClient.getQueryData<AuthResponse | null>([
+        GET_USER_QUERY,
+      ]);
+
+      const isDeletingSelf = authData?.data.user.id === userId;
+
+      if (isDeletingSelf) {
+        queryClient.setQueryData([GET_USER_QUERY], null);
+      }
     },
   });
 };
@@ -206,6 +216,7 @@ export const useUpdateUser = (): UseMutationResult<
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: [USERS_QUERY] });
+      queryClient.invalidateQueries({ queryKey: [GET_USER_QUERY] });
     },
   });
 };

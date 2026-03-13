@@ -1,24 +1,13 @@
-import { useEffect } from "react";
-import { useGetUser, useGetUsers } from "src/api/queries";
-import { useNavigate } from "react-router-dom";
+import { useGetUsers } from "src/api/queries";
 import { Loader } from "src/components/Loader";
 import { UserMenu } from "./components/UserMenu";
 import { Profile } from "./components/Profile";
+import { useAuth } from "src/hooks/useAuth";
 
 export const DashboardPage = () => {
-  const navigate = useNavigate();
-
-  const { data: loggedUser, isLoading } = useGetUser();
+  const { user: currentUser, isLoading } = useAuth();
 
   const { data: users, isLoading: isLoadingUsers } = useGetUsers();
-
-  const user = loggedUser?.data.user;
-
-  useEffect(() => {
-    if (isLoading) return;
-
-    if (!user) navigate("/");
-  }, [user, isLoading, navigate]);
 
   if (isLoading) {
     return (
@@ -38,7 +27,7 @@ export const DashboardPage = () => {
           <h1 className="text-lg font-bold text-white tracking-tight">
             Dashboard
           </h1>
-          <UserMenu name={user?.name ?? ""} />
+          <UserMenu name={currentUser?.name ?? ""} />
         </div>
       </header>
 
@@ -50,7 +39,11 @@ export const DashboardPage = () => {
         ) : (
           <div className="grid grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] gap-4">
             {users?.map((user) => (
-              <Profile key={user.id} user={user} />
+              <Profile
+                key={user.id}
+                user={user}
+                isCurrentUser={user.id === currentUser?.id}
+              />
             ))}
           </div>
         )}
