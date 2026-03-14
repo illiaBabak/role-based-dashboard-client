@@ -27,6 +27,7 @@ export const UserMenu = ({ name }: UserMenuProps) => {
     <ClickAwayListener onClickAway={() => setOpen(false)}>
       <div className="relative z-10">
         <button
+          data-testid="user-menu-button"
           onClick={() => setOpen((prev) => !prev)}
           className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-indigo-600 text-sm font-bold text-white ring-2 ring-indigo-500/30 transition-all hover:ring-indigo-500/60 active:scale-95"
         >
@@ -51,6 +52,7 @@ export const UserMenu = ({ name }: UserMenuProps) => {
 
               <div className="p-1.5">
                 <button
+                  data-testid="logout-button"
                   onClick={handleLogout}
                   disabled={isPending}
                   className="flex w-full cursor-pointer items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-slate-300 transition-colors hover:bg-white/10 hover:text-white disabled:opacity-50"

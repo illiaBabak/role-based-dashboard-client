@@ -24,7 +24,7 @@ export const DashboardPage = () => {
 
       <header className="relative border-b border-white/5">
         <div className="flex items-center justify-between px-8 py-4">
-          <h1 className="text-lg font-bold text-white tracking-tight">
+          <h1 data-testid="dashboard-heading" className="text-lg font-bold text-white tracking-tight">
             Dashboard
           </h1>
           <UserMenu name={currentUser?.name ?? ""} />

@@ -5,17 +5,22 @@ import { UseQueryResult, useQuery } from "@tanstack/react-query";
 import { GET_USER_QUERY, USERS_QUERY } from "./constants";
 
 const getUser = async (): Promise<AuthResponse | null> => {
-  const response = await fetch(`${API_URL}/auth/me`, {
-    credentials: "include",
-  });
+  try {
+    const response = await fetch(`${API_URL}/auth/me`, {
+      credentials: "include",
+    });
 
-  const result = await response.json();
+    const result = await response.json();
 
-  if (!response.ok) {
-    throw new Error("Unauthorized");
+    if (!response.ok) {
+      throw new Error("Unauthorized");
+    }
+
+    return isAuthResponse(result) ? result : null;
+  } catch (error) {
+    console.error("Error getting user:", error);
+    return null;
   }
-
-  return isAuthResponse(result) ? result : null;
 };
 
 const getUsers = async (): Promise<CreatedUser[] | null> => {

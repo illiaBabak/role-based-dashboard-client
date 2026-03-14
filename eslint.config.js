@@ -5,6 +5,7 @@ import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import tsPlugin from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
+import cypress from "eslint-plugin-cypress";
 
 export default [
   { ignores: ["dist", "node_modules"] },
@@ -17,12 +18,14 @@ export default [
         ...globals.mocha,
         ...globals.jest,
         NodeJS: true,
+        cy: "readonly",
       },
       parser: tsParser,
       parserOptions: {
         ecmaVersion: "latest",
         sourceType: "module",
         jsx: true,
+        cypress: cypress,
       },
     },
     settings: {
@@ -42,12 +45,10 @@ export default [
       ...tsPlugin.configs.recommended.rules,
       "react-hooks/rules-of-hooks": "off",
       "react/no-unescaped-entities": "off",
-      "react-hooks/refs": "off",
       "no-console": "warn",
       "no-alert": "error",
       "no-unused-vars": "off",
       "react-refresh/only-export-components": "off",
-
       "@typescript-eslint/no-unused-vars": [
         "warn",
         { argsIgnorePattern: "^_" },

@@ -1,15 +1,15 @@
 {
   "compilerOptions": {
     "target": "es2020",
-    "module": "commonjs",
+    "module": "esnext",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "outDir": "./dist",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true
   },
-  "include": ["src/**/*"],
+  "include": ["vite.config.ts", "cypress.config.ts"],
   "exclude": ["node_modules"]
 }

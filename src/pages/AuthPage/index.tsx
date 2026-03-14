@@ -21,7 +21,7 @@ export const AuthPage = () => {
   }, [user, isLoading, navigate]);
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-4">
+    <div className="relative flex min-h-screen items-center justify-center overflow-y-auto bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-4">
       <div className="pointer-events-none absolute -right-40 -top-40 h-96 w-96 rounded-full bg-indigo-500/10 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-purple-500/10 blur-3xl" />
 
